@@ -1,7 +1,0 @@
-FROM r-base:latest
-WORKDIR /home
-RUN mkdir -p /home/results
-RUN R -e "install.packages('ggplot2', repos='https://cloud.r-project.org/')"
-USER root
-COPY hemohlobin.R /home/scripts/text.R 
-CMD ["Rscript", "/home/scripts/hemohlobin.R"] 
