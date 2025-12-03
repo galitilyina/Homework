@@ -1,4 +1,3 @@
-# ПРОСТОЙ РАБОЧИЙ КОД С ГОТОВЫМИ ДАННЫМИ
 
 # Данные о 10 белках разной длины (готовые значения)
 protein_names <- c(
@@ -33,5 +32,39 @@ grid(nx = NA, ny = NULL)
 # Добавляем значения поверх столбцов
 text(1:10, protein_data$Длина + 50, labels = protein_data$Длина)
 
+# Загружаем необходимые библиотеки
+library(httr)
 
+# Функция для получения белка в формате FASTA
+get_protein_fasta <- function(accession) {
+  url <- paste0("https://www.ebi.ac.uk/proteins/api/proteins/", accession)
+  
+  # Делаем запрос с заголовком для FASTA формата
+  response <- GET(url, accept("text/x-fasta"))
+  
+  if (status_code(response) == 200) {
+    return(content(response, "text"))
+  } else {
+    cat("Ошибка:", status_code(response), "для белка", accession, "\n")
+    return(NULL)
+  }
+}
+
+# Получаем FASTA для белка (например, P00533 - EGFR)
+accession <- "P00533"
+fasta_content <- get_protein_fasta(accession)
+
+if (!is.null(fasta_content)) {
+  # Создаем имя файла
+  filename <- paste0(accession, ".fasta")
+  
+  # Сохраняем в файл
+  writeLines(fasta_content, filename)
+  
+  cat("Файл сохранен:", filename, "\n")
+  cat("Содержимое:\n")
+  cat(fasta_content)
+} else {
+  cat("Не удалось получить данные для белка", accession, "\n")
+}
 
