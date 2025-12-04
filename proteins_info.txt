@@ -1,0 +1,6 @@
+accessions	entryName	organism
+P68871	HBB_HUMAN	Homo sapiens
+P02768	ALBU_HUMAN	Homo sapiens
+P01178	NEU1_HUMAN	Homo sapiens
+P10636	TAU_HUMAN	Homo sapiens
+P01308	INS_HUMAN	Homo sapiens
